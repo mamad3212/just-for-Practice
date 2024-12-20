@@ -1,19 +1,9 @@
-var express = require ("express") ;
-var bodyParser = require ("body-parser") ;
-var app = express () ;
+var http = require('http');
 
+//create a server object:
+http.createServer(function (req, res) {
+  res.write(req.url);
+  res.end(); //end the response
+}).listen(2222); //the server object listens on port 8080
 
-app.use (express.static (__dirname + "/viw") ) ;
-app.use (bodyParser.json()) ;
-app.use (bodyParser.urlencoded({ extended:true }) );
-
-
-
-app.get ("/" , function (req , resp , next) {
-    resp.sendFile (__dirname + "/home.html")
-}) ;
-
-
-
-app.listen (2222) ;
-console.log ("server running on port 2222") ;
+console.log ("server running on port 2222");
