@@ -1,6 +1,4 @@
-var http = require('http');
 const mysql = require('mysql');
-
 
 const db = mysql.createConnection({
   host: 'localhost',
@@ -9,21 +7,25 @@ const db = mysql.createConnection({
   database: 'practice'
 });
 
+// اتصال به پایگاه داده
 db.connect(function(err) {
-  console.log('connect to mysql');
+
+  console.log('Connected to MySQL');
 });
 
-// sql code
-const query = `
-  INSERT INTO pages (id, page, \`key\`, value) 
-  VALUES 
-    ('1', 'index', 'title', 'گیتار'), 
-    ('2', 'index', 'content', 'متن');
-`;
+// داده‌ها
+const data = [
+  { page: 'index', key: 'title', value: 'گیتار' },
+  { page: 'index', key: 'content', value: 'متن' }
+];
 
-connection.query(query, function(err, results) {
-    console.log('Records inserted:', results);
-  
-    connection.end();
 
+const query = 'INSERT INTO pages (page, key, value) VALUES';
+
+
+const values = data.map(item => [item.page, item.key, item.value]);
+
+db.query(query, [values], function(err, results) {
+
+  db.end();
 });
